@@ -4,6 +4,9 @@ import jakarta.persistence.GenerationType;
 
 import java.time.Instant;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,15 +25,20 @@ public class User {
 	private String email;
 
 	@Column(nullable = false)
+	private String name;
+
+	@Column(nullable = false)
 	private String passwordHash;
 
+	@Generated(event = EventType.INSERT)
 	@Column(insertable = false, updatable = false)
 	private Instant createdAt;
 
 	protected User() {}
 
-	public User(String email, String passwordHash) {
+	public User(String email, String name, String passwordHash) {
 		this.email = email;
+		this.name = name;
 		this.passwordHash = passwordHash;
 	}
 
@@ -40,6 +48,10 @@ public class User {
 
 	public String getEmail() {
 		return this.email;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public String getPasswordHash() {
